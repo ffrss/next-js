@@ -13,6 +13,8 @@
 }
 
 .icon {
+  border: 1px solid transparent;
+  border-radius: 50%;
   opacity: 0.6;
   cursor: pointer;
 }
