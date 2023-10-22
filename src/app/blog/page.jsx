@@ -1,26 +1,43 @@
 import Link from "next/link";
-import React from "react";
 import styles from "./page.module.scss";
 import Image from "next/image";
+import BlogImage from "public/blog.png";
 
-const Blog = () => {
+async function getData() {
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/posts?_limit=5",
+    {
+      cache: "no-store",
+    }
+  );
+  return res.json();
+}
+
+const Blog = async () => {
+  const data = await getData();
   return (
     <div className={styles.mainContainer}>
-      <Link href="blog/test" className={styles.container} key="1">
-        <div className={styles.imageContainer}>
-          <Image
-            src="https://img.freepik.com/free-photo/robot-handshake-human-background-futuristic-digital-age_53876-129770.jpg?w=1380&t=st=1686056951~exp=1686057551~hmac=5da557bfff0192720a1dfa7608b353322afcbfc038886c891ba296fd8fa7e97b"
-            alt=""
-            width={400}
-            height={250}
-            className={styles.image}
-          />
-        </div>
-        <div className={styles.content}>
-          <h1 className={styles.title}>Title</h1>
-          <p className={styles.desc}>Desc</p>
-        </div>
-      </Link>
+      {data.map((item) => (
+        <Link
+          href={`blog/${item.id}`}
+          className={styles.container}
+          key={item.id}
+        >
+          <div className={styles.imageContainer}>
+            <Image
+              src={BlogImage}
+              alt=""
+              width={400}
+              height={250}
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.content}>
+            <h1 className={styles.title}>{item.title}</h1>
+            <p className={styles.desc}>{item.body}</p>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };
