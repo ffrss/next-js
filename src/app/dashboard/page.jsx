@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
+import styles from "./page.module.scss";
 
 const Dashboard = () => {
   // const [data, setData] = useState([]);
